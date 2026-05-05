@@ -9,12 +9,30 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as PerceptronRouteImport } from './routes/perceptron'
+import { Route as GradientDescentRouteImport } from './routes/gradient-descent'
 import { Route as DashboardRouteImport } from './routes/dashboard'
+import { Route as ActivationsRouteImport } from './routes/activations'
 import { Route as IndexRouteImport } from './routes/index'
 
+const PerceptronRoute = PerceptronRouteImport.update({
+  id: '/perceptron',
+  path: '/perceptron',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GradientDescentRoute = GradientDescentRouteImport.update({
+  id: '/gradient-descent',
+  path: '/gradient-descent',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DashboardRoute = DashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ActivationsRoute = ActivationsRouteImport.update({
+  id: '/activations',
+  path: '/activations',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -25,37 +43,81 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/activations': typeof ActivationsRoute
   '/dashboard': typeof DashboardRoute
+  '/gradient-descent': typeof GradientDescentRoute
+  '/perceptron': typeof PerceptronRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/activations': typeof ActivationsRoute
   '/dashboard': typeof DashboardRoute
+  '/gradient-descent': typeof GradientDescentRoute
+  '/perceptron': typeof PerceptronRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/activations': typeof ActivationsRoute
   '/dashboard': typeof DashboardRoute
+  '/gradient-descent': typeof GradientDescentRoute
+  '/perceptron': typeof PerceptronRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/dashboard'
+  fullPaths:
+    | '/'
+    | '/activations'
+    | '/dashboard'
+    | '/gradient-descent'
+    | '/perceptron'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/dashboard'
-  id: '__root__' | '/' | '/dashboard'
+  to: '/' | '/activations' | '/dashboard' | '/gradient-descent' | '/perceptron'
+  id:
+    | '__root__'
+    | '/'
+    | '/activations'
+    | '/dashboard'
+    | '/gradient-descent'
+    | '/perceptron'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ActivationsRoute: typeof ActivationsRoute
   DashboardRoute: typeof DashboardRoute
+  GradientDescentRoute: typeof GradientDescentRoute
+  PerceptronRoute: typeof PerceptronRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/perceptron': {
+      id: '/perceptron'
+      path: '/perceptron'
+      fullPath: '/perceptron'
+      preLoaderRoute: typeof PerceptronRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/gradient-descent': {
+      id: '/gradient-descent'
+      path: '/gradient-descent'
+      fullPath: '/gradient-descent'
+      preLoaderRoute: typeof GradientDescentRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/dashboard': {
       id: '/dashboard'
       path: '/dashboard'
       fullPath: '/dashboard'
       preLoaderRoute: typeof DashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/activations': {
+      id: '/activations'
+      path: '/activations'
+      fullPath: '/activations'
+      preLoaderRoute: typeof ActivationsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -70,7 +132,10 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ActivationsRoute: ActivationsRoute,
   DashboardRoute: DashboardRoute,
+  GradientDescentRoute: GradientDescentRoute,
+  PerceptronRoute: PerceptronRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
