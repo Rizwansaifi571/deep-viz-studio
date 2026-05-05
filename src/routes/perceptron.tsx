@@ -27,9 +27,12 @@ function PerceptronPage() {
   const [lr, setLr] = useState(0.05);
   const [epochs, setEpochs] = useState(40);
   const [seed, setSeed] = useState(7);
+  const [initW1, setInitW1] = useState(0.1);
+  const [initW2, setInitW2] = useState(-0.2);
+  const [initB, setInitB] = useState(0.0);
 
   const data = useMemo(() => makeBlobs(60, seed), [seed]);
-  const trained = useMemo(() => trainPerceptron(data, lr, epochs), [data, lr, epochs]);
+  const trained = useMemo(() => trainPerceptron(data, lr, epochs, initW1, initW2, initB), [data, lr, epochs, initW1, initW2, initB]);
 
   const lossData = trained.losses.map((l, i) => ({ epoch: i, loss: l }));
   const acc = useMemo(() => {
@@ -123,13 +126,24 @@ function PerceptronPage() {
           <ParameterSlider label="Learning rate" value={lr} onChange={setLr} min={0.001} max={1} step={0.001} hint="Step size for each weight update." />
           <ParameterSlider label="Epochs" value={epochs} onChange={(v) => setEpochs(Math.round(v))} min={1} max={200} step={1} hint="How many passes over the data." />
           <ParameterSlider label="Random seed" value={seed} onChange={(v) => setSeed(Math.round(v))} min={1} max={50} step={1} hint="Re-shuffle the dataset." />
-          <GradientButton variant="ghost" onClick={() => { setLr(0.05); setEpochs(40); setSeed(Math.floor(Math.random() * 50) + 1); }}>
+          
+          <div className="pt-2 border-t border-white/10 space-y-4">
+            <div>
+              <h3 className="font-display font-semibold text-sm">Initial Weights</h3>
+              <p className="text-xs text-muted-foreground">Control where the perceptron starts.</p>
+            </div>
+            <ParameterSlider label="Initial w₁" value={initW1} onChange={setInitW1} min={-2} max={2} step={0.1} />
+            <ParameterSlider label="Initial w₂" value={initW2} onChange={setInitW2} min={-2} max={2} step={0.1} />
+            <ParameterSlider label="Initial b" value={initB} onChange={setInitB} min={-2} max={2} step={0.1} />
+          </div>
+
+          <GradientButton variant="ghost" onClick={() => { setLr(0.05); setEpochs(40); setSeed(Math.floor(Math.random() * 50) + 1); setInitW1(0.1); setInitW2(-0.2); setInitB(0.0); }}>
             <RefreshCw className="size-4" /> Reset & re-shuffle
           </GradientButton>
           <div className="pt-3 border-t border-white/10 space-y-2 text-xs">
-            <div className="flex justify-between"><span className="text-muted-foreground">w₁</span><span className="font-mono">{trained.w1.toFixed(3)}</span></div>
-            <div className="flex justify-between"><span className="text-muted-foreground">w₂</span><span className="font-mono">{trained.w2.toFixed(3)}</span></div>
-            <div className="flex justify-between"><span className="text-muted-foreground">b</span><span className="font-mono">{trained.b.toFixed(3)}</span></div>
+            <div className="flex justify-between"><span className="text-muted-foreground">Final w₁</span><span className="font-mono">{trained.w1.toFixed(3)}</span></div>
+            <div className="flex justify-between"><span className="text-muted-foreground">Final w₂</span><span className="font-mono">{trained.w2.toFixed(3)}</span></div>
+            <div className="flex justify-between"><span className="text-muted-foreground">Final b</span><span className="font-mono">{trained.b.toFixed(3)}</span></div>
           </div>
         </GlassCard>
       }
@@ -137,16 +151,16 @@ function PerceptronPage() {
         <CodePreview
           code={`import numpy as np
 
-w = np.zeros(2); b = 0.0
+w = np.array([${initW1.toFixed(2)}, ${initW2.toFixed(2)}]); b = ${initB.toFixed(2)}
 for epoch in range(${epochs}):
     for x, y in data:
         z = w @ x + b
         p = 1 / (1 + np.exp(-z))
         err = p - y
-        w -= ${lr} * err * x
-        b -= ${lr} * err`}
+        w -= ${lr.toFixed(3)} * err * x
+        b -= ${lr.toFixed(3)} * err`}
           log={[
-            `init: w=[0,0] b=0`,
+            `init: w=[${initW1.toFixed(2)}, ${initW2.toFixed(2)}] b=${initB.toFixed(2)}`,
             `lr=${lr}  epochs=${epochs}`,
             `final w=[${trained.w1.toFixed(3)}, ${trained.w2.toFixed(3)}] b=${trained.b.toFixed(3)}`,
             `accuracy=${acc.toFixed(1)}%  loss=${trained.losses.at(-1)?.toFixed(4)}`,

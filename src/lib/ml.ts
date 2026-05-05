@@ -47,8 +47,11 @@ export function trainPerceptron(
   data: { x: number; y: number; label: 0 | 1 }[],
   lr: number,
   epochs: number,
+  initW1 = 0.1,
+  initW2 = -0.2,
+  initB = 0
 ) {
-  let w1 = 0.1, w2 = -0.2, b = 0;
+  let w1 = initW1, w2 = initW2, b = initB;
   const losses: number[] = [];
   for (let e = 0; e < epochs; e++) {
     let loss = 0;

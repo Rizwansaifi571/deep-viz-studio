@@ -50,6 +50,8 @@ export const Route = createRootRoute({
   notFoundComponent: NotFoundComponent,
 });
 
+import { SidebarProvider } from "@/hooks/use-sidebar";
+
 function RootShell({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
@@ -57,7 +59,9 @@ function RootShell({ children }: { children: React.ReactNode }) {
         <HeadContent />
       </head>
       <body>
-        {children}
+        <SidebarProvider>
+          {children}
+        </SidebarProvider>
         <Scripts />
       </body>
     </html>
