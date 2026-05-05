@@ -9,12 +9,26 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as WhatIfRouteImport } from './routes/what-if'
+import { Route as RnnRouteImport } from './routes/rnn'
 import { Route as PerceptronRouteImport } from './routes/perceptron'
 import { Route as GradientDescentRouteImport } from './routes/gradient-descent'
+import { Route as ExplainRouteImport } from './routes/explain'
 import { Route as DashboardRouteImport } from './routes/dashboard'
+import { Route as CnnRouteImport } from './routes/cnn'
 import { Route as ActivationsRouteImport } from './routes/activations'
 import { Route as IndexRouteImport } from './routes/index'
 
+const WhatIfRoute = WhatIfRouteImport.update({
+  id: '/what-if',
+  path: '/what-if',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RnnRoute = RnnRouteImport.update({
+  id: '/rnn',
+  path: '/rnn',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PerceptronRoute = PerceptronRouteImport.update({
   id: '/perceptron',
   path: '/perceptron',
@@ -25,9 +39,19 @@ const GradientDescentRoute = GradientDescentRouteImport.update({
   path: '/gradient-descent',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ExplainRoute = ExplainRouteImport.update({
+  id: '/explain',
+  path: '/explain',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DashboardRoute = DashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CnnRoute = CnnRouteImport.update({
+  id: '/cnn',
+  path: '/cnn',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ActivationsRoute = ActivationsRouteImport.update({
@@ -44,54 +68,101 @@ const IndexRoute = IndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/activations': typeof ActivationsRoute
+  '/cnn': typeof CnnRoute
   '/dashboard': typeof DashboardRoute
+  '/explain': typeof ExplainRoute
   '/gradient-descent': typeof GradientDescentRoute
   '/perceptron': typeof PerceptronRoute
+  '/rnn': typeof RnnRoute
+  '/what-if': typeof WhatIfRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/activations': typeof ActivationsRoute
+  '/cnn': typeof CnnRoute
   '/dashboard': typeof DashboardRoute
+  '/explain': typeof ExplainRoute
   '/gradient-descent': typeof GradientDescentRoute
   '/perceptron': typeof PerceptronRoute
+  '/rnn': typeof RnnRoute
+  '/what-if': typeof WhatIfRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/activations': typeof ActivationsRoute
+  '/cnn': typeof CnnRoute
   '/dashboard': typeof DashboardRoute
+  '/explain': typeof ExplainRoute
   '/gradient-descent': typeof GradientDescentRoute
   '/perceptron': typeof PerceptronRoute
+  '/rnn': typeof RnnRoute
+  '/what-if': typeof WhatIfRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
     | '/activations'
+    | '/cnn'
     | '/dashboard'
+    | '/explain'
     | '/gradient-descent'
     | '/perceptron'
+    | '/rnn'
+    | '/what-if'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/activations' | '/dashboard' | '/gradient-descent' | '/perceptron'
+  to:
+    | '/'
+    | '/activations'
+    | '/cnn'
+    | '/dashboard'
+    | '/explain'
+    | '/gradient-descent'
+    | '/perceptron'
+    | '/rnn'
+    | '/what-if'
   id:
     | '__root__'
     | '/'
     | '/activations'
+    | '/cnn'
     | '/dashboard'
+    | '/explain'
     | '/gradient-descent'
     | '/perceptron'
+    | '/rnn'
+    | '/what-if'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ActivationsRoute: typeof ActivationsRoute
+  CnnRoute: typeof CnnRoute
   DashboardRoute: typeof DashboardRoute
+  ExplainRoute: typeof ExplainRoute
   GradientDescentRoute: typeof GradientDescentRoute
   PerceptronRoute: typeof PerceptronRoute
+  RnnRoute: typeof RnnRoute
+  WhatIfRoute: typeof WhatIfRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/what-if': {
+      id: '/what-if'
+      path: '/what-if'
+      fullPath: '/what-if'
+      preLoaderRoute: typeof WhatIfRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/rnn': {
+      id: '/rnn'
+      path: '/rnn'
+      fullPath: '/rnn'
+      preLoaderRoute: typeof RnnRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/perceptron': {
       id: '/perceptron'
       path: '/perceptron'
@@ -106,11 +177,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GradientDescentRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/explain': {
+      id: '/explain'
+      path: '/explain'
+      fullPath: '/explain'
+      preLoaderRoute: typeof ExplainRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/dashboard': {
       id: '/dashboard'
       path: '/dashboard'
       fullPath: '/dashboard'
       preLoaderRoute: typeof DashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cnn': {
+      id: '/cnn'
+      path: '/cnn'
+      fullPath: '/cnn'
+      preLoaderRoute: typeof CnnRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/activations': {
@@ -133,10 +218,23 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ActivationsRoute: ActivationsRoute,
+  CnnRoute: CnnRoute,
   DashboardRoute: DashboardRoute,
+  ExplainRoute: ExplainRoute,
   GradientDescentRoute: GradientDescentRoute,
   PerceptronRoute: PerceptronRoute,
+  RnnRoute: RnnRoute,
+  WhatIfRoute: WhatIfRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { createStart } from '@tanstack/react-start'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+  }
+}
