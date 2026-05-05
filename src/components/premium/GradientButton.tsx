@@ -37,7 +37,7 @@ export const GradientButton = forwardRef<HTMLButtonElement, Props>(function Grad
       )}
       {...rest}
     >
-      {children}
+      {children as React.ReactNode}
     </motion.button>
   );
 });

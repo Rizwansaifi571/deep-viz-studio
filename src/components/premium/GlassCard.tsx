@@ -21,7 +21,7 @@ export const GlassCard = forwardRef<HTMLDivElement, Props>(function GlassCard(
       {...rest}
     >
       <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
-      {children}
+      {children as React.ReactNode}
     </motion.div>
   );
 });
