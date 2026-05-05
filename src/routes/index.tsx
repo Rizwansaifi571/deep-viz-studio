@@ -42,6 +42,13 @@ export const Route = createFileRoute("/")({
           "Learn neural networks, activations, gradient descent, CNNs and RNNs with premium interactive visualizations.",
       },
     ],
+    // Put favicon.svg inside your /public folder.
+    // public/favicon.svg will be available as /favicon.svg in the browser.
+    links: [
+      { rel: "icon", href: "/favicon.svg", type: "image/svg+xml" },
+      { rel: "shortcut icon", href: "/favicon.svg", type: "image/svg+xml" },
+      { rel: "apple-touch-icon", href: "/favicon.svg" },
+    ],
   }),
   component: Landing,
 });
@@ -179,6 +186,17 @@ function PremiumBadge({ children }: { children: React.ReactNode }) {
   );
 }
 
+function BrandLogo({ size = "md" }: { size?: "sm" | "md" }) {
+  const boxSize = size === "sm" ? "size-8 rounded-lg" : "size-9 rounded-xl";
+  const iconSize = size === "sm" ? "size-4" : "size-5";
+
+  return (
+    <div className={`grid ${boxSize} place-items-center bg-gradient-aurora shadow-glow-sm`}>
+      <Brain className={`${iconSize} text-primary-foreground`} />
+    </div>
+  );
+}
+
 function FloatingOrb({ className }: { className?: string }) {
   return (
     <motion.div
@@ -223,9 +241,7 @@ function HeroPreview() {
           <div className="grid min-h-[520px] gap-4 lg:grid-cols-[240px_1fr_280px]">
             <aside className="hidden rounded-2xl border border-white/10 bg-white/[0.035] p-4 lg:block">
               <div className="mb-5 flex items-center gap-2">
-                <div className="grid size-9 place-items-center rounded-xl bg-gradient-aurora shadow-glow-sm">
-                  <CircuitBoard className="size-5 text-primary-foreground" />
-                </div>
+                <BrandLogo />
                 <div>
                   <p className="text-sm font-medium">Neural Lab</p>
                   <p className="text-xs text-muted-foreground">Premium workspace</p>
@@ -424,9 +440,7 @@ function Landing() {
       <header className="sticky top-0 z-50 border-b border-white/10 bg-background/45 backdrop-blur-2xl">
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
           <Link to="/" className="flex items-center gap-2.5">
-            <div className="grid size-9 place-items-center rounded-xl bg-gradient-aurora shadow-glow-sm">
-              <Brain className="size-5 text-primary-foreground" />
-            </div>
+            <BrandLogo />
             <span className="font-display font-semibold tracking-tight">Deep Learning Toolbox</span>
           </Link>
 
@@ -438,9 +452,6 @@ function Landing() {
           </nav>
 
           <div className="flex items-center gap-3">
-            <Link to="/perceptron" className="hidden text-sm text-muted-foreground transition hover:text-foreground sm:block">
-              Try demo
-            </Link>
             <Link to="/dashboard">
               <GradientButton size="sm">
                 Open Dashboard <ArrowRight className="size-4" />
@@ -564,11 +575,7 @@ function Landing() {
                 Instead of static theory, each section reveals the model lifecycle step by step — interaction, observation and understanding.
               </p>
               <div className="mt-8 flex flex-wrap gap-3 text-sm text-muted-foreground">
-                {[
-                  "Animated concepts",
-                  "Live feedback",
-                  "Premium interface",
-                ].map((item) => (
+                {["Animated concepts", "Live feedback", "Premium interface"].map((item) => (
                   <span key={item} className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.035] px-4 py-2">
                     <CheckCircle2 className="size-4 text-success" />
                     {item}
@@ -685,12 +692,10 @@ function Landing() {
 
       <footer className="relative z-10 border-t border-white/10 py-8">
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-6 text-center text-xs text-muted-foreground md:flex-row md:text-left">
-          <div className="flex items-center gap-2">
-            <div className="grid size-8 place-items-center rounded-lg bg-gradient-aurora">
-              <Brain className="size-4 text-primary-foreground" />
-            </div>
-            <span>Deep Learning Toolbox · Premium Edition</span>
-          </div>
+          <Link to="/" className="flex items-center gap-2.5 transition hover:text-foreground">
+            <BrandLogo size="sm" />
+            <span>Deep Learning Toolbox ·</span>
+          </Link>
           <div className="flex items-center gap-2">
             <Lock className="size-3.5" />
             Built for fast, visual and interactive AI learning
