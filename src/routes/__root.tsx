@@ -29,14 +29,22 @@ export const Route = createRootRoute({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: "Deep Viz Studio — Interactive Deep Learning Visualizations" },
+      {
+        name: "description",
+        content:
+          "Deep Viz Studio is a premium interactive deep-learning visualization platform for exploring neural networks, activation functions, gradient descent, CNNs, RNNs, and model explainability.",
+      },
+      { name: "author", content: "Rizwan Saifi" },
+      { property: "og:title", content: "Deep Viz Studio" },
+      {
+        property: "og:description",
+        content:
+          "Explore deep learning concepts through premium interactive labs, animated visualizations, live controls, and hands-on AI experiments.",
+      },
       { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary" },
-      { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:site", content: "@rizwansaifi2614" },
     ],
     links: [
       {
