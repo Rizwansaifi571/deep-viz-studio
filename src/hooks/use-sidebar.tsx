@@ -1,5 +1,3 @@
-import { create } from "zustand"; // wait, let's just make a file that uses React context
-
 import { createContext, useContext, useState, ReactNode } from "react";
 
 interface SidebarContextType {
