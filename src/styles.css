@@ -168,11 +168,21 @@
   .shadow-glow-sm { box-shadow: var(--shadow-glow-sm); }
   .shadow-elegant { box-shadow: var(--shadow-elegant); }
   .grid-bg {
+    position: relative;
+    z-index: 0;
+  }
+  .grid-bg::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
     background-image:
       linear-gradient(oklch(1 0 0 / 0.04) 1px, transparent 1px),
       linear-gradient(90deg, oklch(1 0 0 / 0.04) 1px, transparent 1px);
     background-size: 48px 48px;
     mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+    -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
   }
   .scroll-thin::-webkit-scrollbar { width: 6px; height: 6px; }
   .scroll-thin::-webkit-scrollbar-thumb { background: oklch(0.3 0.03 270); border-radius: 8px; }
